@@ -19,7 +19,7 @@ data class User(
     constructor(id: String) : this (id, "John", "Doe")
 
     init {
-        println("His name is $firstName $lastName!!!")
+        println("It's Alive!!! \n${if(lastName==="Doe") "His name id $firstName $lastName" else "And his name is $firstName $lastName!!!"}")
     }
 
     companion object Factory{
