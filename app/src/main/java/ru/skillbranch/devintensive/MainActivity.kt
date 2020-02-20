@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         val status = savedInstanceState?.getString("STATUS") ?: Bender.Status.NORMAL.name
         val question = savedInstanceState?.getString("QUESTION") ?: Bender.Question.NAME.name
+
         benderObj = Bender(Bender.Status.valueOf(status), Bender.Question.valueOf(status))
 
         Log.d("M_MainActivity", "onCreate $status $question")
