@@ -11,14 +11,22 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         Question.IDLE -> Question.IDLE.question
     }
 
+    var count : Int = 0
     fun listenAnswer(answer: String): Pair<String, Triple<Int, Int, Int>> {
         return if(question.answers.contains(answer)) {
+            count = 0
             question = question.nextQuestion()
-            "Отлично - это правильный ответ\n${question.question}" to status.color
-        } else {
+            "Отлично - ты справился\n${question.question}" to status.color
+        }
+        else if (count !=3){
+            count = count +1
             status = status.nextStatus()
             "Это неправильный ответ\n${question.question}" to status.color
-        }
+        } else {
+            count = 0
+            status = Status.NORMAL
+            question = Question.NAME
+            "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color}
     }
 
     enum class Status(val color: Triple<Int, Int, Int>) {
@@ -40,7 +48,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         NAME("Как меня зовут?", listOf("бендер", "bender")) {
             override fun nextQuestion(): Question = PROFESSION
         },
-        PROFESSION("Назови мою профессию", listOf("бендер", "сгибальщик")) {
+        PROFESSION("Назови мою профессию?", listOf("bender", "сгибальщик")) {
             override fun nextQuestion(): Question = MATERIAL
         },
         MATERIAL("Из чего я сделан?", listOf("металл", "дерево", "metal", "iron", "wood")) {
